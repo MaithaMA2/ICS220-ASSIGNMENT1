@@ -1,0 +1,176 @@
+class Customer:
+    """
+    Represents a customer in the delivery management system.
+    """
+    def __init__(self, customer_id, name, contact_info, address):
+        self._customer_id = customer_id
+        self._name = name
+        self._contact_info = contact_info
+        self._address = address
+        self._order_history = []
+
+    def get_customer_id(self):
+        return self._customer_id
+    
+    def get_name(self):
+        return self._name
+    
+    def get_contact_info(self):
+        return self._contact_info
+    
+    def get_address(self):
+        return self._address
+    
+    def get_order_history(self):
+        return self._order_history
+    
+    def set_contact_info(self, contact_info):
+        self._contact_info = contact_info
+    
+    def set_address(self, address):
+        self._address = address
+    
+    def place_order(self, order):
+        """Handles order placement."""
+        self._order_history.append(order)
+
+    def view_orders(self):
+        """Displays past orders."""
+        return self._order_history
+
+    def __str__(self):
+        return f"Customer[ID: {self._customer_id}, Name: {self._name}, Contact: {self._contact_info}, Address: {self._address}]"
+
+
+class Order:
+    """
+    Represents an order placed by a customer.
+    """
+    def __init__(self, order_id, customer_name, items, total_price, status):
+        self._order_id = order_id
+        self._customer_name = customer_name
+        self._items = items
+        self._total_price = total_price
+        self._status = status
+
+    def get_order_id(self):
+        return self._order_id
+    
+    def get_customer_name(self):
+        return self._customer_name
+    
+    def get_items(self):
+        return self._items
+    
+    def get_total_price(self):
+        return self._total_price
+    
+    def get_status(self):
+        return self._status
+    
+    def set_status(self, status):
+        self._status = status
+
+    def __str__(self):
+        return f"Order[ID: {self._order_id}, Customer: {self._customer_name}, Items: {self._items}, Total: {self._total_price}, Status: {self._status}]"
+
+
+class DeliveryNote:
+    """
+    Represents a delivery note for an order.
+    """
+    def __init__(self, note_id, order_id, delivery_date, package_weight, courier_name):
+        self._note_id = note_id
+        self._order_id = order_id
+        self._delivery_date = delivery_date
+        self._package_weight = package_weight
+        self._courier_name = courier_name
+
+    def get_note_id(self):
+        return self._note_id
+    
+    def get_order_id(self):
+        return self._order_id
+    
+    def get_delivery_date(self):
+        return self._delivery_date
+    
+    def get_package_weight(self):
+        return self._package_weight
+    
+    def get_courier_name(self):
+        return self._courier_name
+    
+    def print_note(self):
+        """Prints the delivery note details."""
+        print("\n===== Delivery Note =====")
+        print(f"Delivery Note ID: {self._note_id}")
+        print(f"Order ID: {self._order_id}")
+        print(f"Delivery Date: {self._delivery_date}")
+        print(f"Package Weight: {self._package_weight} kg")
+        print(f"Courier Name: {self._courier_name}")
+        print("========================\n")
+    
+    def __str__(self):
+        return f"DeliveryNote[ID: {self._note_id}, OrderID: {self._order_id}, Date: {self._delivery_date}, Weight: {self._package_weight}kg, Courier: {self._courier_name}]"
+
+
+class DeliveryStaff:
+    """
+    Represents a delivery staff member.
+    """
+    def __init__(self, staff_id, name, assigned_orders, status, vehicle):
+        self._staff_id = staff_id
+        self._name = name
+        self._assigned_orders = assigned_orders
+        self._status = status
+        self._vehicle = vehicle
+
+    def get_staff_id(self):
+        return self._staff_id
+    
+    def get_name(self):
+        return self._name
+    
+    def get_assigned_orders(self):
+        return self._assigned_orders
+    
+    def get_status(self):
+        return self._status
+    
+    def get_vehicle(self):
+        return self._vehicle
+    
+    def update_status(self, order, new_status):
+        """Updates the order delivery status."""
+        order.set_status(new_status)
+        print(f"Order {order.get_order_id()} status updated to {new_status}")
+    
+    def __str__(self):
+        return f"DeliveryStaff[ID: {self._staff_id}, Name: {self._name}, Status: {self._status}, Vehicle: {self._vehicle}]"
+
+# Create Sample Objects
+customer = Customer(1, "Maryam Ahmed", "maryam.ahmed@example.com", "Dubai - Al Barsha")
+order = Order(101, "Maryam Ahmed", ["Wireless Keyboard", "Mouse & Pad Set", "Laptop Cooling Pad", "Camera Lock"], 283.50, "Processing")
+delivery_note = DeliveryNote(5001, 101, "2025-01-25", 7.0, "John")
+delivery_staff = DeliveryStaff(201, "John", [101], "On Duty", "Van")
+
+# Simulate Order Placement
+customer.place_order(order)
+
+# Print Object Details
+print(customer)
+print(order)
+print(delivery_note)
+print(delivery_staff)
+
+# Populate and Display Delivery Note Information
+delivery_note.print_note()
+
+# Simulate Viewing Customer Orders
+print("\nCustomer Order History:")
+for ord in customer.view_orders():
+    print(ord)
+
+# Simulate Delivery Staff Updating Order Status
+delivery_staff.update_status(order, "Delivered")
